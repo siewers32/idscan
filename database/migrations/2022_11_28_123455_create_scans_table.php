@@ -17,7 +17,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('person_id');
             $table->unsignedBigInteger('building_id');
-            $table->datetime('scantime');
+            $table->foreign('person_id')->references('id')->on('persons');
+            $table->foreign('building_id')->references('id')->on('buildings');
+            $table->date('scandate');
+            $table->time('scantime');
+            $table->string('in_out');
             $table->timestamps();
         });
     }

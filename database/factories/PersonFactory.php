@@ -22,7 +22,7 @@ class PersonFactory extends Factory
             'title' => $faker->title($gender),
             'firstname' => $faker->firstName($gender),
             'lastname' => $faker->lastName(),
-            'email' => $faker->streetName(),
+            'email' => $faker->email(),
             'jobtitle' => $faker->jobTitle(),
         ];
     }
