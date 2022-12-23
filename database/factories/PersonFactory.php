@@ -64,6 +64,7 @@ class PersonFactory extends Factory
             'dhr.' => 10,
             'mevr.' => 10,
             'ir.' => 2,
+            'ing.' => 4,
             'prof.' => 2,
             'drs.' => 4,
             'dr.' => 3,
