@@ -16,14 +16,20 @@ class PersonFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create('nl_NL');
+        $domain = 'superduper-markets.com';
         $jobtitles = $this->createJobTitles();
+        $titles = $this->createTitles();
         $faker = Faker\Factory::create('nl_NL');
         $gender = (random_int(0,1))?'male':'female';
+        $firstname = $faker->firstName($gender);
+        $lastname = $faker->lastName();
+        $email = mb_strtolower(substr($firstname, 0, 1).'.'.str_replace([' ', '-'], "", $lastname).'@'.$domain);
         return [
-            'title' => $faker->title($gender),
-            'firstname' => $faker->firstName($gender),
-            'lastname' => $faker->lastName(),
-            'email' => $faker->email(),
+            'title' => $faker->randomElement($titles),
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'email' => $email,
             'jobtitle' => $faker->randomElement($jobtitles),
         ];
     }
@@ -51,5 +57,24 @@ class PersonFactory extends Factory
             }
         }
         return $jts;
+    }
+
+    public function createTitles() {
+        $titles = [
+            'dhr.' => 10,
+            'mevr.' => 10,
+            'ir.' => 2,
+            'prof.' => 2,
+            'drs.' => 4,
+            'dr.' => 3,
+            'ds.' => 1, //Dominee
+            'mr.' =>1, //Meester in de rechten
+        ];
+        foreach($titles as $title => $number) {
+            for ($i = 0; $i < $number; $i++) {
+                $tts[] = $title;
+            }
+        }
+        return $tts;
     }
 }
