@@ -17,6 +17,10 @@ class PersonFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create('nl_NL');
+        $domain = 'superduper-markets.com';
+        $jobtitles = $this->createJobTitles();
+        $titles = $this->createTitles();
         $faker = Faker\Factory::create('nl_NL');
         $gender = (random_int(0, 1)) ? 'male' : 'female';
         $firstName = $faker->firstName($gender);
@@ -59,5 +63,50 @@ class PersonFactory extends Factory
             'email' => $email,
             'jobtitle' => $jobTitles[$jobseeker],
         ];
+    }
+
+    public function createJobTitles() {
+        $jobtitles = [
+            "projectleider" => 3,
+            "verkoopassistent" => 12,
+            "kassamedewerker" => 7,
+            "supervisor" => 4,
+            "medewerker M&O" => 5,
+            "kwaliteitsmanager" => 2,
+            "magazijnmedewerker" => 9,
+            "medewerker communicatie" => 5,
+            "directeur" => 1,
+            "hoofd administratie" => 1,
+            "medewerker administratie" => 22,
+            "commercieel directeur" => 1,
+            "medewerker salarisadministratie" => 2,
+            "verkoopadviseur" => 5
+        ];
+        foreach($jobtitles as $title => $number) {
+            for ($i = 0; $i < $number; $i++) {
+                $jts[] = $title;
+            }
+        }
+        return $jts;
+    }
+
+    public function createTitles() {
+        $titles = [
+            'dhr.' => 10,
+            'mevr.' => 10,
+            'ir.' => 2,
+            'ing.' => 4,
+            'prof.' => 2,
+            'drs.' => 4,
+            'dr.' => 3,
+            'ds.' => 1, //Dominee
+            'mr.' =>1, //Meester in de rechten
+        ];
+        foreach($titles as $title => $number) {
+            for ($i = 0; $i < $number; $i++) {
+                $tts[] = $title;
+            }
+        }
+        return $tts;
     }
 }
