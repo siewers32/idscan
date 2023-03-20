@@ -18,50 +18,23 @@ class PersonFactory extends Factory
     public function definition()
     {
         $faker = \Faker\Factory::create('nl_NL');
+        $gender = (random_int(0, 1)) ? 'male' : 'female';
         $domain = 'superduper-markets.com';
         $jobtitles = $this->createJobTitles();
-        $titles = $this->createTitles();
-        $faker = Faker\Factory::create('nl_NL');
-        $gender = (random_int(0, 1)) ? 'male' : 'female';
+        $titles = $this->createTitles($gender);
         $firstName = $faker->firstName($gender);
         $lastName = $faker->lastName($gender);
         $email = strtolower(substr($firstName, 0, 1) . preg_replace('/\s+/', '', $lastName) . "@superduper.com");
-        $jobTitles = [
-            "Productieplanner",
-            "Loopbaancoach",
-            "Productiebegeleider",
-            "Advocaat",
-            "Corrector",
-            "Systeemprogrammeur",
-            "Onderzoeker",
-            "Bedrijfsorganisatiedeskundige",
-            "Bedrijfsleider"
-        ];
-        $title = ($gender == 'male') ? "dhr." : "mevr.";
-        $titles = [
-            "ds.",
-            "dr.",
-            "ing.",
-            "mr.",
-            "ir.",
-            "ds.",
-            "drs",
-            "prof.",
-            $title,
-            $title,
-            $title,
-            $title,
-            $title
-        ];
+
         $title = ($gender == 'male') ? "dhr" : "mevr.";
-        $jobseeker = random_int(0, (count($jobTitles) - 1));
+        $jobseeker = random_int(0, (count($jobtitles) - 1));
         $titleseeker = random_int(0, (count($titles) - 1));
         return [
             'title' => $titles[$titleseeker],
             'firstname' => $firstName,
             'lastname' => $lastName,
             'email' => $email,
-            'jobtitle' => $jobTitles[$jobseeker],
+            'jobtitle' => $jobtitles[$jobseeker],
         ];
     }
 
@@ -90,7 +63,7 @@ class PersonFactory extends Factory
         return $jts;
     }
 
-    public function createTitles() {
+    public function createTitles($gender) {
         $titles = [
             'dhr.' => 10,
             'mevr.' => 10,
@@ -102,6 +75,9 @@ class PersonFactory extends Factory
             'ds.' => 1, //Dominee
             'mr.' =>1, //Meester in de rechten
         ];
+        $title['dhr.'] = ($gender == 'male') ? 10 : 0;
+        $title['mevr.'] = ($gender == 'female') ? 10 : 0;
+
         foreach($titles as $title => $number) {
             for ($i = 0; $i < $number; $i++) {
                 $tts[] = $title;
